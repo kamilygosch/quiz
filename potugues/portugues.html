@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EDITOR-CHEFE</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --red:#b3262e;
+    --red-dark:#8e1820;
+    --cream:#f5f0e7;
+    --paper:#fffdf8;
+    --black:#191817;
+    --gray:#716d67;
+    --line:#d9d1c5;
+}
+
+body{
+    background:var(--cream);
+    color:var(--black);
+    font-family:"DM Sans",sans-serif;
+}
+
+/* =========================
+   INTRO
+========================= */
+
+.screen{
+    min-height:100vh;
+}
+
+#intro{
+    min-height:100vh;
+    display:grid;
+    grid-template-columns:55% 45%;
+    background:var(--red);
+}
+
+.intro-left{
+    color:white;
+    padding:55px 6vw;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.mini-logo{
+    font-size:12px;
+    letter-spacing:3px;
+    font-weight:700;
+}
+
+.intro-content{
+    max-width:700px;
+}
+
+.big-number{
+    font-size:clamp(130px,18vw,240px);
+    line-height:.72;
+    font-weight:700;
+    letter-spacing:-14px;
+    opacity:.95;
+}
+
+.intro-content h1{
+    font-family:"Libre Baskerville",serif;
+    font-size:clamp(42px,5.5vw,76px);
+    line-height:1;
+    margin-top:35px;
+}
+
+.intro-content p{
+    max-width:470px;
+    margin-top:24px;
+    color:#f3d8d9;
+    line-height:1.6;
+    font-size:15px;
+}
+
+.start-btn{
+    margin-top:35px;
+    background:white;
+    color:var(--red);
+    border:0;
+    padding:17px 25px;
+    font-weight:700;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.start-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,.15);
+}
+
+/* papel */
+
+.intro-right{
+    background:var(--cream);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:50px;
+    position:relative;
+}
+
+.paper{
+    background:var(--paper);
+    width:min(390px,90%);
+    min-height:500px;
+    padding:42px;
+    box-shadow:18px 20px 0 var(--red-dark);
+    transform:rotate(2deg);
+    position:relative;
+}
+
+.paper-top{
+    display:flex;
+    justify-content:space-between;
+    font-size:9px;
+    letter-spacing:2px;
+    color:#777;
+    text-transform:uppercase;
+    border-bottom:1px solid var(--line);
+    padding-bottom:15px;
+}
+
+.paper-red{
+    width:55px;
+    height:5px;
+    background:var(--red);
+    margin:35px 0 25px;
+}
+
+.paper h2{
+    font-family:"Libre Baskerville",serif;
+    font-size:31px;
+    line-height:1.12;
+    margin-bottom:28px;
+}
+
+.fake-line{
+    height:7px;
+    background:#ded8cf;
+    margin:12px 0;
+}
+
+.fake-line.short{
+    width:65%;
+}
+
+.paper-question{
+    margin-top:40px;
+    color:var(--red);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+/* =========================
+   REDAÇÃO
+========================= */
+
+#newsroom{
+    display:none;
+    min-height:100vh;
+}
+
+.header{
+    height:72px;
+    background:var(--red);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5vw;
+}
+
+.header-logo{
+    font-family:"Libre Baskerville",serif;
+    font-weight:700;
+    font-size:19px;
+}
+
+.header-info{
+    font-size:10px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    opacity:.85;
+}
+
+.heading{
+    padding:65px 5vw 35px;
+    max-width:1150px;
+    margin:auto;
+}
+
+.heading-label{
+    color:var(--red);
+    font-size:10px;
+    letter-spacing:2px;
+    font-weight:700;
+    text-transform:uppercase;
+    margin-bottom:17px;
+}
+
+.heading h1{
+    font-family:"Libre Baskerville",serif;
+    font-size:clamp(38px,5vw,65px);
+    line-height:1.02;
+    max-width:750px;
+}
+
+.heading p{
+    margin-top:17px;
+    color:var(--gray);
+    font-size:14px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+    max-width:1150px;
+    margin:auto;
+    padding:10px 5vw 80px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+}
+
+.card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    min-height:245px;
+    padding:28px;
+    position:relative;
+    cursor:pointer;
+    transition:.25s;
+    overflow:hidden;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:5px;
+    height:100%;
+    background:var(--red);
+    transform:scaleY(0);
+    transform-origin:bottom;
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 18px 35px rgba(60,40,25,.1);
+}
+
+.card:hover::before{
+    transform:scaleY(1);
+}
+
+.card-number{
+    color:var(--red);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+}
+
+.card h2{
+    font-family:"Libre Baskerville",serif;
+    font-size:27px;
+    line-height:1.15;
+    margin-top:38px;
+    max-width:430px;
+}
+
+.card p{
+    color:var(--gray);
+    font-size:13px;
+    line-height:1.5;
+    margin-top:17px;
+    max-width:430px;
+}
+
+.card-arrow{
+    position:absolute;
+    right:28px;
+    bottom:25px;
+    color:var(--red);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(25,20,18,.78);
+    z-index:20;
+    padding:20px;
+    align-items:center;
+    justify-content:center;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    background:var(--paper);
+    width:min(690px,100%);
+    max-height:90vh;
+    overflow-y:auto;
+    padding:45px;
+    position:relative;
+    border-top:7px solid var(--red);
+}
+
+.close{
+    position:absolute;
+    top:15px;
+    right:20px;
+    border:0;
+    background:none;
+    font-size:27px;
+    color:#777;
+    cursor:pointer;
+}
+
+.modal-label{
+    color:var(--red);
+    font-size:10px;
+    letter-spacing:2px;
+    font-weight:700;
+    margin-bottom:13px;
+}
+
+.article-number{
+    color:#888;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.article h2{
+    font-family:"Libre Baskerville",serif;
+    font-size:clamp(30px,4vw,46px);
+    line-height:1.1;
+    margin:14px 0 28px;
+}
+
+.article p{
+    font-family:"Libre Baskerville",serif;
+    font-size:15px;
+    line-height:1.7;
+    margin-bottom:16px;
+}
+
+.publish{
+    width:100%;
+    margin-top:15px;
+    padding:17px;
+    background:var(--red);
+    color:white;
+    border:0;
+    font-weight:700;
+    letter-spacing:1px;
+    cursor:pointer;
+}
+
+.publish:hover{
+    background:var(--red-dark);
+}
+
+/* =========================
+   RESULTADO
+========================= */
+
+#result{
+    display:none;
+    min-height:100vh;
+    align-items:center;
+    justify-content:center;
+    padding:40px 25px;
+    background:var(--red);
+    color:white;
+}
+
+.result-box{
+    max-width:720px;
+    text-align:center;
+}
+
+.result-label{
+    font-size:10px;
+    letter-spacing:3px;
+    font-weight:700;
+    opacity:.75;
+}
+
+.result-box h1{
+    font-family:"Libre Baskerville",serif;
+    font-size:clamp(48px,7vw,85px);
+    line-height:1;
+    margin:25px 0;
+}
+
+.result-title{
+    font-family:"Libre Baskerville",serif;
+    font-size:25px;
+}
+
+.result-text{
+    margin:20px auto 0;
+    max-width:620px;
+    color:#f2dfe0;
+    line-height:1.7;
+    font-size:14px;
+}
+
+.restart{
+    margin-top:32px;
+    background:white;
+    color:var(--red);
+    border:0;
+    padding:16px 25px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+    #intro{
+        grid-template-columns:1fr;
+    }
+
+    .intro-left{
+        min-height:65vh;
+        padding:35px 25px;
+    }
+
+    .intro-right{
+        min-height:35vh;
+        padding:30px;
+    }
+
+    .paper{
+        min-height:330px;
+        padding:30px;
+        width:300px;
+    }
+
+    .paper h2{
+        font-size:24px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .heading{
+        padding-top:45px;
+    }
+}
+
+@media(max-width:500px){
+
+    .header{
+        padding:0 20px;
+    }
+
+    .header-info{
+        font-size:8px;
+    }
+
+    .heading,
+    .cards{
+        padding-left:20px;
+        padding-right:20px;
+    }
+
+    .card{
+        min-height:220px;
+    }
+
+    .modal-box{
+        padding:40px 25px 25px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================
+     INTRO
+========================= -->
+
+<section id="intro" class="screen">
+
+    <div class="intro-left">
+
+        <div class="mini-logo">
+            EDITOR-CHEFE / REDAÇÃO
+        </div>
+
+        <div class="intro-content">
+
+            <div class="big-number">04</div>
+
+            <h1>
+                Você<br>
+                publicaria?
+            </h1>
+
+            <p>
+                Quatro textos chegaram à redação.
+                Todos parecem editoriais.
+                Apenas um está pronto para a edição.
+            </p>
+
+            <button class="start-btn" onclick="startGame()">
+                ABRIR OS TEXTOS →
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="intro-right">
+
+        <div class="paper">
+
+            <div class="paper-top">
+                <span>EDIÇÃO</span>
+                <span>REDAÇÃO</span>
+            </div>
+
+            <div class="paper-red"></div>
+
+            <h2>
+                O que faz um editorial ser um editorial?
+            </h2>
+
+            <div class="fake-line"></div>
+            <div class="fake-line"></div>
+            <div class="fake-line short"></div>
+
+            <div class="paper-question">
+                LEIA. ANALISE. DECIDA.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     NEWSROOM
+========================= -->
+
+<section id="newsroom">
+
+    <header class="header">
+
+        <div class="header-logo">
+            EDITOR-CHEFE
+        </div>
+
+        <div class="header-info">
+            04 textos / 01 escolha
+        </div>
+
+    </header>
+
+
+    <div class="heading">
+
+        <div class="heading-label">
+            Sala de redação
+        </div>
+
+        <h1>
+            Qual texto<br>
+            merece ser publicado?
+        </h1>
+
+        <p>
+            Leia os quatro candidatos antes de decidir.
+        </p>
+
+    </div>
+
+
+    <div class="cards" id="cards"></div>
+
+</section>
+
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeModal()">×</button>
+
+        <div class="modal-label">
+            VOCÊ PUBLICARIA?
+        </div>
+
+        <div id="article"></div>
+
+        <button class="publish" onclick="publish()">
+            PUBLICAR ESTE TEXTO
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     RESULTADO
+========================= -->
+
+<section id="result">
+
+    <div class="result-box">
+
+        <div class="result-label">
+            DECISÃO DA REDAÇÃO
+        </div>
+
+        <h1 id="resultHeadline"></h1>
+
+        <div class="result-title" id="resultTitle"></div>
+
+        <p class="result-text" id="resultText"></p>
+
+        <button class="restart" onclick="restart()">
+            VOLTAR AOS TEXTOS
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =========================
+   TEXTOS
+========================= */
+
+const texts = [
+
+{
+    number:"01",
+    title:"QUEM CUIDA DE QUEM ENSINA?",
+    teaser:"Melhorar a educação também passa por olhar para quem está dentro da escola.",
+    correct:true,
+    paragraphs:[
+        "Fala-se muito sobre melhorar a educação, mas pouco se discute sobre quem passa boa parte do dia tentando fazê-la acontecer.",
+        "Salários, formação e condições de trabalho influenciam diretamente a atuação dos professores.",
+        "Valorizar quem ensina não resolve sozinho os problemas da educação, mas é um passo necessário."
+    ],
+    explanation:"Este texto apresenta uma posição clara, utiliza argumentos e mantém uma linguagem impessoal. A opinião é apresentada como posicionamento do veículo, e não como experiência pessoal de um autor."
+},
+
+{
+    number:"02",
+    title:"TODO PROFESSOR DEIXA UMA MARCA",
+    teaser:"Alguns professores permanecem na memória muito depois da sala de aula.",
+    correct:false,
+    paragraphs:[
+        "Alguns professores passam pela nossa vida e ficam. Eu mesmo consigo lembrar daqueles que fizeram diferença na minha trajetória.",
+        "Por isso, acredito que valorizar esses profissionais deveria ser uma prioridade.",
+        "Melhorar salários e condições de trabalho é importante, mas também precisamos reconhecer o lado humano de quem ensina."
+    ],
+    explanation:"O texto assume uma experiência e uma opinião pessoal ao usar expressões como “eu mesmo” e “acredito”. Isso aproxima sua construção da característica do artigo de opinião, ligado à visão de um autor."
+},
+
+{
+    number:"03",
+    title:"QUANDO A NOTÍCIA CHEGA ANTES DA VERDADE",
+    teaser:"Informação rápida nem sempre significa informação compreendida.",
+    correct:false,
+    paragraphs:[
+        "Nunca tivemos acesso a tanta informação. Notícias aparecem na tela antes mesmo de conseguirmos entender o que aconteceu.",
+        "Eu acredito que precisamos ensinar as pessoas a analisar aquilo que recebem.",
+        "Mais do que publicar rapidamente, os veículos precisam garantir que a informação ajude o público a compreender a realidade."
+    ],
+    explanation:"A expressão “eu acredito” apresenta diretamente a opinião pessoal de quem escreve. No editorial, a posição deve representar o veículo de comunicação, mantendo o caráter impessoal."
+},
+
+{
+    number:"04",
+    title:"E VOCÊ, VAI FAZER O QUÊ?",
+    teaser:"A educação enfrenta problemas que já não podem ser tratados como promessa.",
+    correct:false,
+    paragraphs:[
+        "A escola enfrenta problemas que não podem mais ser ignorados. Faltam estrutura, recursos e condições adequadas para ensinar.",
+        "Precisamos cobrar mudanças. Precisamos exigir investimentos.",
+        "Se queremos um país diferente, precisamos começar pela escola. Cada cidadão tem responsabilidade nessa transformação."
+    ],
+    explanation:"O texto constrói sua posição por meio de uma voz coletiva marcada por “precisamos” e “se queremos”. Em vez de apresentar de forma impessoal a posição do veículo, assume uma voz pessoal e coletiva."
+}
+
+];
+
+let selected = null;
+
+
+/* =========================
+   INICIAR
+========================= */
+
+function startGame(){
+
+    document.getElementById("intro").style.display="none";
+    document.getElementById("newsroom").style.display="block";
+
+    renderCards();
+
+    window.scrollTo(0,0);
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+function renderCards(){
+
+    const container=document.getElementById("cards");
+
+    container.innerHTML="";
+
+    texts.forEach((text,index)=>{
+
+        const card=document.createElement("div");
+
+        card.className="card";
+
+        card.onclick=()=>openText(index);
+
+        card.innerHTML=`
+
+            <div class="card-number">
+                TEXTO ${text.number}
+            </div>
+
+            <h2>
+                ${text.title}
+            </h2>
+
+            <p>
+                ${text.teaser}
+            </p>
+
+            <div class="card-arrow">
+                LER →
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   ABRIR
+========================= */
+
+function openText(index){
+
+    selected=texts[index];
+
+    const article=document.getElementById("article");
+
+    article.innerHTML=`
+
+        <div class="article-number">
+            TEXTO ${selected.number}
+        </div>
+
+        <h2>
+            ${selected.title}
+        </h2>
+
+        ${selected.paragraphs.map(p=>`
+            <p>${p}</p>
+        `).join("")}
+
+    `;
+
+    document.getElementById("modal").classList.add("active");
+
+    document.body.style.overflow="hidden";
+}
+
+
+/* =========================
+   FECHAR
+========================= */
+
+function closeModal(){
+
+    document.getElementById("modal").classList.remove("active");
+
+    document.body.style.overflow="auto";
+}
+
+
+/* =========================
+   PUBLICAR
+========================= */
+
+function publish(){
+
+    if(!selected) return;
+
+    closeModal();
+
+    document.getElementById("newsroom").style.display="none";
+    document.getElementById("result").style.display="flex";
+
+    document.getElementById("resultTitle").textContent=selected.title;
+    document.getElementById("resultText").textContent=selected.explanation;
+
+    if(selected.correct){
+
+        document.getElementById("resultHeadline").textContent="Publicado.";
+
+    }else{
+
+        document.getElementById("resultHeadline").textContent="Não publicaria.";
+
+    }
+
+    window.scrollTo(0,0);
+}
+
+
+/* =========================
+   RECOMEÇAR
+========================= */
+
+function restart(){
+
+    selected=null;
+
+    document.getElementById("result").style.display="none";
+    document.getElementById("newsroom").style.display="block";
+
+    window.scrollTo(0,0);
+}
+
+
+/* =========================
+   FECHAR CLICANDO FORA
+========================= */
+
+document.getElementById("modal").addEventListener("click",function(e){
+
+    if(e.target===this){
+        closeModal();
+    }
+
+});
+
+
+/* ESC */
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key==="Escape"){
+        closeModal();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
